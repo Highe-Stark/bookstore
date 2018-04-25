@@ -61,10 +61,10 @@ class Home extends React.Component {
 
     render() {
         return (
-            <Card.Group itemsPerRow={5}>
+            <Card.Group itemsPerRow={6}>
                 {books.map(book => (
-                    <Card>
-                        <Image src={book.img} rounded />
+                    <Card key={book.name} value={book.name}>
+                        <Image src={book.img} size='large' rounded />
                         <Card.Content>
                             <Card.Header>
                                 {book.name}
@@ -77,14 +77,15 @@ class Home extends React.Component {
                             </Card.Description>
                         </Card.Content>
                         <Card.Content extra>
-                            <div className='ui two buttons'>
-                                <Button basic color='green' 
-                                    icon={<Icon name="add to cart" size='large' color='olive'/> }>
-                                    Add to Cart
+                            <div className='ui three buttons'>
+                                <Button basic color="pink">
+                                    <Icon name='empty heart' size='small' text='Like' />
                                 </Button>
-                                <Button basic color='red' 
-                                    icon={<Icon name='credit card' size='large' color='orange'/>}>
-                                    Just Take it
+                                <Button basic color='green' >
+                                    <Icon name="add to cart" size='large' color='olive' text='Add to Cart'/>
+                                </Button>
+                                <Button basic color='red' >
+                                    <Icon name='shopping cart' size='large' color='orange' text='Just Take it' />
                                 </Button>
                             </div>
                         </Card.Content>

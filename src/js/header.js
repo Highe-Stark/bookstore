@@ -1,8 +1,15 @@
 import React from 'react';
-import {Segment, Icon, Image, Input, Header, Dropdown, Grid } from 'semantic-ui-react';
+import {Segment, Icon, Image, Input, Header, Dropdown, Grid, Select, Button } from 'semantic-ui-react';
 import {NavLink} from 'react-router-dom';
 
 import Book from '../img/Books-2.jpg';
+
+const catagory = [
+  {key: 'all', text: "All", value: 'all'},
+  {key: 'author', text: 'Author', value: 'author'},
+  {key: 'name', text: 'Book name', value: 'name'},
+  {key: 'publisher', text: "Publisher", value: 'publish'}
+];
 
 class HeaderBar extends React.Component {
   render() {
@@ -20,9 +27,13 @@ class HeaderBar extends React.Component {
               </Header>
             </Grid.Column>
             <Grid.Column width={5}>
-              <Input icon={<Icon name='search' inverted circular link/>}
-                placeholder="Search..." fluid focus
-              />
+              <Input placeholder="Search..." fluid focus>
+              <input/>
+              <Select compact options={catagory} defaultValue='name' />
+              <Button>
+                <Icon name='search' inverted circular link />
+                </Button>
+              </Input>
             </Grid.Column>
             <Grid.Column width={2} textAlign='center' floated='right'>
               <Dropdown icon={<Icon name='user' size='large'/>} floating labeled button>
