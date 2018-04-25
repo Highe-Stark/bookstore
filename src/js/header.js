@@ -38,9 +38,22 @@ class HeaderBar extends React.Component {
             <Grid.Column width={2} textAlign='center' floated='right'>
               <Dropdown icon={<Icon name='user' size='large'/>} floating labeled button>
                 <Dropdown.Menu>
-                  <Dropdown.Item text="Sign in" />
-                  <Dropdown.Item text="Sign up" />
-                  <Dropdown.Item text="Cart" icon='shopping cart'/>
+                  <Dropdown.Item >
+                    <NavLink to='login'>
+                      Sign in
+                      </NavLink>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    <NavLink to='signup'>
+                      Sign up
+                      </NavLink>
+                  </Dropdown.Item>
+                  {/*<Dropdown.Item text="Cart" icon='shopping cart'/>*/}
+                  <Dropdown.Item>
+                    <NavLink to='cart'>
+                      <Icon name='shopping cart' />{' '}shopping cart
+                    </NavLink>
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Grid.Column>
