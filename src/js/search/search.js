@@ -5,7 +5,7 @@ import HeaderBar from '../header';
 import Footer from '../footer';
 
 import The_Old_Man_And_The_Sea from '../../img/The_Old_Man_And_The_Sea.jpg';
-import One_Hunderd_Years_of_Solitude from '../../img/One_Hundred_Years_of_Solitude.jpg';
+import One_Hundred_Years_of_Solitude from '../../img/One_Hundred_Years_of_Solitude.jpg';
 
 var result = [
     {
@@ -20,7 +20,7 @@ var result = [
     {
         name: 'One Hundred Years of Solitude',
         Author: 'Gabriel García Márquez',
-        img: One_Hunderd_Years_of_Solitude,
+        img: One_Hundred_Years_of_Solitude,
         Date: 1967,
         language: 'English',
         price: 10.3,
