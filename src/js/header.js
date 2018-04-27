@@ -1,8 +1,10 @@
 import React from 'react';
-import {Segment, Icon, Image, Input, Header, Dropdown, Grid, Select, Button } from 'semantic-ui-react';
-import {NavLink} from 'react-router-dom';
+import { Icon, Image, Input, Header, Dropdown, Grid, Select, Button } from 'semantic-ui-react';
+import {NavLink } from 'react-router-dom';
 
 import Book from '../img/Books-2.jpg';
+
+import '../css/header.css';
 
 const catagory = [
   {key: 'all', text: "All", value: 'all'},
@@ -14,43 +16,47 @@ const catagory = [
 class HeaderBar extends React.Component {
   render() {
     return (
-      <div>
-        <Grid divided>
+      <div id="header_bar">
+        <Grid divided padded='horizontal'>
           <Grid.Row>
             <Grid.Column width={3} textAlign='left'>
-              <Header as="h2">
+              <NavLink to="/">
+              <Header as="h2" color='teal'>
                 <Image circular src={Book} height='20rem' verticalAlign='middle' />
                 {' '}书轩
-            <Header.Subheader>
+                <Header.Subheader color='teal'>
                   <p>Enjoy Book, Enjoy Life.</p>
                 </Header.Subheader>
               </Header>
+              </NavLink>
             </Grid.Column>
-            <Grid.Column width={5}>
-              <Input placeholder="Search..." fluid focus>
+            <Grid.Column width={11} verticalAlign='middle' stretched>
+              <Input placeholder="Search..." fluid focus iconPosition='left'>
               <input/>
-              <Select compact options={catagory} defaultValue='name' />
-              <Button>
-                <Icon name='search' inverted circular link />
+                <Icon name='search'/>
+              <Select options={catagory} defaultValue='name' />
+              <Button compact>
+                <NavLink to='/search'>
+                <Icon name='search' circular link />
+                </NavLink>
                 </Button>
               </Input>
             </Grid.Column>
-            <Grid.Column width={2} textAlign='center' floated='right'>
-              <Dropdown icon={<Icon name='user' size='large'/>} floating labeled button>
+            <Grid.Column width={2} textAlign='center' floated='right' verticalAlign='middle'>
+              <Dropdown icon={<Icon name='user' size='large' color='teal'/>} floating labeled button>
                 <Dropdown.Menu>
                   <Dropdown.Item >
-                    <NavLink to='login'>
+                    <NavLink to='/login'>
                       Sign in
                       </NavLink>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    <NavLink to='signup'>
+                    <NavLink to='/signup'>
                       Sign up
                       </NavLink>
                   </Dropdown.Item>
-                  {/*<Dropdown.Item text="Cart" icon='shopping cart'/>*/}
                   <Dropdown.Item>
-                    <NavLink to='cart'>
+                    <NavLink to='/cart'>
                       <Icon name='shopping cart' />{' '}shopping cart
                     </NavLink>
                   </Dropdown.Item>

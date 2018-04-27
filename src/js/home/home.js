@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import {Grid, Button, Card, Image, Icon} from 'semantic-ui-react';
+// import { NavLink } from 'react-router-dom';
+import { Button, Card, Image, Icon} from 'semantic-ui-react';
 
 import Le_Petit_Prince from '../../img/Le_Petit_Prince.jpg';
 import Bible from '../../img/Bible.jpg';
@@ -9,8 +9,8 @@ import Harry_Potter from '../../img/Harry_Potter.jpeg';
 import Journey_To_The_West from '../../img/Journey_To_The_West.jpg';
 import Stray_Birds from '../../img/Stray_Birds.jpg';
 import The_Dream_of_the_Red_Chamber from '../../img/The_Dream_of_the_Red_Chamber.jpg';
-import The_Old_Man_And_The_Sea from '../../img/The_Old_Man_And_The_Sea.jpg';
-import One_Hunderd_Years_of_Solitude from '../../img/One_Hundred_Years_of_Solitude.jpg';
+// import The_Old_Man_And_The_Sea from '../../img/The_Old_Man_And_The_Sea.jpg';
+// import One_Hunderd_Years_of_Solitude from '../../img/One_Hundred_Years_of_Solitude.jpg';
 
 var books = [
     {name: 'Le Petit Prince', 

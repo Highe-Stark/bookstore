@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Icon, Button, Image, Card, Divider, Container} from 'semantic-ui-react';
+import { Divider, Container} from 'semantic-ui-react';
 import HeaderBar from '../header';
 
 class Cart extends Component {
