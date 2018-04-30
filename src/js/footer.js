@@ -1,6 +1,6 @@
 // import _ from 'lodash';
 import React, {Component} from 'react';
-import {Grid, Icon, Select, Label, Dropdown} from 'semantic-ui-react';
+import {Grid, Icon, Label, Dropdown} from 'semantic-ui-react';
 
 const lang = [
   {key: 'us', value: 'us', flag: 'us', text: "United States"},

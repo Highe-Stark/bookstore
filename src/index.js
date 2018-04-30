@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Route, Router } from 'react-router-dom';
-import createHistory from 'history/createBrowserHistory';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css';
 
 import App from './js/App';
@@ -14,24 +13,20 @@ import Account from './js/account/account';
 // import Collection from './js/account/collection';
 import registerServiceWorker from './registerServiceWorker';
 
-const history = createHistory();
+// const history = createHistory();
 
-const location = history.location;
+// const location = history.location;
 
 ReactDOM.render(
-    <Router history={history}>
+    <Router>
         <div>
-        <Route exact path="/" component={App}/>
-        <Route path="/search" component={Search} />
-        <Route path="/cart" component={Cart}/>
-        <Route path="/login">
-            <Login history={history}/>
-        </Route>
-        <Route path="/signup" component={Signup}/>
-        <Route path='/account' component={Account}>
-            { /*<Route path='user_info' component={UserInfo}/>
-            <Route path='collection' component={Collection}/>*/ }
-        </Route>
+            <Route exact path="/" component={App}/>
+            <Route path="/search" component={Search} />
+            <Route path="/cart" component={Cart}/>
+            <Route path="/login" component={Login}/>
+            <Route path="/signup" component={Signup}/>
+            <Route path='/account' component={Account}>
+            </Route>
         </div>
     </Router>,
     document.getElementById('root'));

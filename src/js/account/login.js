@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Button, Form, Grid, Segment, Header, Icon, Input, Message} from 'semantic-ui-react';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 // import {History} from 'react-router-dom';
 import '../../css/login.css';
 
@@ -8,47 +8,60 @@ import '../../css/login.css';
 class Login extends Component {
     constructor(props){
         super(props);
+        console.log(props);
         this.state = {
             logged: false
         }
     }
 
 
-    _login() {
-        let formData = new FormData();
-        formData.append("userId", document.getElementById("userId").value);
-        formData.append("pwd", document.getElementById("pwd").value);
-
-        let url = "http://localhost:8080/login";
+    _login=() => {
+        //var formData = new FormData();
+        var userid = document.getElementById("userId");
+        console.log("user id" + userid.value);
+        var pwd = document.getElementById("pwd");
+        console.log("pwd" + pwd.value);
+        // debug <<<<<<<<<<<<<<
+        // console.log(JSON.stringify(formData));
+        let url = "http://localhost:8080/login?userId=" + userid.value + "&pwd=" + pwd.value;
+        var that = this;
         fetch (url, {
             method: 'POST',
-            body: formData,
-            dataType: "text",
+            body: {},
+            credentials: 'include',
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0;Wind64;x64)',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            origin: "http://localhost:3306"
         }).then(
             function(response) {
                 if (response.status !== 200) {
                     console.log("Login failed. Status: " + response.status);
-                    this.setState({
-                        logged: true
+                    that.setState({
+                        logged: false
                     });
-                    this.props.history.push('/');
+                    userid.value = "";
+                    pwd.value = "";
                     return;
                 }
+                // response status = 200, login success
                 response.json().then(
-                    function(data) {
-                        if (data.code === 1) {
-                            this.setState({
-                                value: data.data.code
-                            })
-                            console.log(data.data.code);
-                        }
+                    (data) => {
+                        that.setState({
+                            logged: true
+                        });
+                        console.log(JSON.stringify(data));
+                        console.log("You login successfully in " + data.login_timestamp);
+                        that.props.history.push("/");
                     }
                 );
             }
-        ).catch(function(err) {
+        ).catch((err)=> {
             console.log("Fetch Error: " + err);
+
             this.props.history.push('/signup');
-        });
+      });
     }
 
   render() {
@@ -80,4 +93,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withRouter(Login);
