@@ -17,7 +17,7 @@ class HeaderBar extends React.Component {
   render() {
     return (
       <div id="header_bar">
-        <Grid divided padded='horizontal'>
+        <Grid divided padded>
           <Grid.Row>
             <Grid.Column width={3} textAlign='left'>
               <NavLink to="/">

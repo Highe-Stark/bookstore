@@ -1,10 +1,14 @@
-#home {
+.home {
     background-image: url('../img/Books Background.jpg');
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
 
-#footer {
-    background-color: rgba(156, 227, 255, 0.3);
+.footer {
+    background-color: rgba(250, 255, 245, 0.3);
+}
+
+.searchResult {
+    background-color: rgba(250, 255, 245, 0.4);
 }

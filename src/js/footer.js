@@ -2,6 +2,8 @@
 import React, {Component} from 'react';
 import {Grid, Icon, Label, Dropdown} from 'semantic-ui-react';
 
+import '../css/home.css';
+
 const lang = [
   {key: 'us', value: 'us', flag: 'us', text: "United States"},
   {key: 'gb', value: 'gb', flag: 'gb', text: "United Kindom"},
@@ -34,8 +36,24 @@ class Footer extends Component {
                 <Icon name='youtube play' size='small' color='red' />{' '}Youtube
               </Label>
           </Grid.Column>
+          <Grid.Column>
+            Contact Us
+          </Grid.Column>
+          <Grid.Column>
+            Join Us
+          </Grid.Column>
         </Grid.Row>
+        <Grid.Row>
           <div style={{marginBottom: '2.5rem'}}></div>
+        </Grid.Row>
+        <Grid.Row columns={1} textAlign='center'>
+          <Grid.Column>
+            <span>
+                All rights reserved<br/>
+              2018.04.30
+            </span>
+          </Grid.Column>
+        </Grid.Row>
       </Grid>
     )
   }

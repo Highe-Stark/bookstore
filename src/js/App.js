@@ -11,14 +11,14 @@ import '../css/home.css';
 class App extends React.Component {
     render() {
         return (
-            <div id='home'>
+            <div className='home'>
                 <HeaderBar/>
                 <Navigator/>
                 <div style={{margin: '3rem'}}>
                     <Home />
                 </div>
                 <Divider/>
-                <div id='footer'>
+                <div>
                     <Footer/>
                 </div>
             </div>
