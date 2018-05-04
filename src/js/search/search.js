@@ -38,7 +38,7 @@ var result = [
     }
 ];
 
-var books = [
+/*var books = [
     {name: 'Le Petit Prince',
         Author: 'Antoine de Saint-Exupéry',
         Date: 'April 1943',
@@ -80,39 +80,53 @@ var books = [
         Date: '1600s',
         img: Journey_To_The_West
     }
-];
+];*/
 class Search extends React.Component {
-    // searchRes = result;
 
     constructor(props) {
         super(props);
         this.state = {
-            res : result
+            res : result,
+            validQuery: true,
         }
     }
 
-    increase=(e) => {
-        result[e].amount += 1;
-        this.setState({
-            res : result
-        });
+    componentWillMount() {
 
-    }
-
-    decrease=(e) => {
-        result[e].amount -= 1;
-        if (result[e].amount <= 0) {
-            result.splice(e, 1);
+        var query = this.props.history.location.search;
+        let pos = query.indexOf("=");
+        if (pos == query.length - 1) {
+            this.setState({
+                validQuery : false
+            })
+            return;
         }
-        this.setState({
-            res : result
-        });
+        var url = 'http://localhost:8080/' + this.props.history.location.search;
+        fetch ( url, {
+            mode : 'no-cors',
+        }).then (response => {return response.json()})
+            .then((data) => {
+                for (let i = 0; i != data.length; i++) {
+                    let book = {
+                        name : data[i].name,
+                        Author : data[i].author,
+                        img : 'http://localhost:8080/img/' + data[i].isbn + '.jpg',
+                        Date : data[i].date,
+                        Language : data[i].lang,
+                        price : data[i].price,
+                        amount : data[i].amount
+                    }
+                    result.push(book);
+                }
+                this.setState({
+                    res : result
+                })
+            })
     }
 
     render () {
         return (
-            <div className='home'>
-                <HeaderBar/>
+            <div>
                 <Grid>
                     <Grid.Row>
                         <Grid.Column>
@@ -125,45 +139,16 @@ class Search extends React.Component {
                 </Grid>
                 <Card.Group itemsPerRow={6}>
                     {
-                        books.map(function(book, idx) {
+                        this.state.res.map(function(book, idx) {
                             return (
                                 <BookCard book={book} key={idx}/>
                             )
                         })
                     }
                 </Card.Group>
-                <Footer/>
             </div>
         );
     }
 }
 
 export default Search;
-{/*<Grid className='searchResult'>
-                {
-                    this.state.res.map(function(book, idx) {
-                        return (
-                            <Grid.Row key={idx} >
-                                <Grid.Column width={2}><Image src={book.img} size='small' rounded/></Grid.Column>
-                                <Grid.Column width={5} verticalAlign='middle'>
-                                    <Card header={book.name} meta={book.Author} extra={book.Date}/>
-                                </Grid.Column>
-                                <Grid.Column width={1}>{book.language}</Grid.Column>
-                                <Grid.Column width={3}>
-                                    <Statistic size='small'>
-                                        <Statistic.Value>
-                                            <Icon name='dollar'/>{book.price}
-                                        </Statistic.Value>
-                                    </Statistic>
-                                </Grid.Column>
-                                <Grid.Column width={5}>
-                                    <Input type='number' value={book.amount} compact>
-                                        <Button icon='plus' size='small' onClick={() => {this.increase(idx)}}/>
-                                        <input />
-                                        <Button icon='minus' size='small' onClick={() => {this.decrease(idx)}}/>
-                                    </Input>
-                                </Grid.Column>
-                            </Grid.Row>
-                        )
-                    }, this)
-            </Grid>*/}

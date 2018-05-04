@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Divider, Grid, Image, Statistic, Input, Button, Card, Icon} from 'semantic-ui-react';
+import { Divider, Grid } from 'semantic-ui-react';
 import HeaderBar from '../header';
 import BookItem from '../bookItem';
 
@@ -74,7 +74,7 @@ class Cart extends Component {
 
 export default Cart;
 
-{/*
+/*
 
                                 <Grid.Row key={idx} >
                                     <Grid.Column width={2}><Image src={book.img} size='small' rounded/></Grid.Column>
@@ -97,4 +97,4 @@ export default Cart;
                                         </Input>
                                     </Grid.Column>
                                 </Grid.Row>
-*/}
+*/

@@ -1,6 +1,7 @@
 import React from 'react';
 // import { NavLink } from 'react-router-dom';
 import { Button, Card, Image, Icon} from 'semantic-ui-react';
+import BookCard from '../bookCard';
 
 import Le_Petit_Prince from '../../img/Le_Petit_Prince.jpg';
 import Bible from '../../img/Bible.jpg';
@@ -57,40 +58,44 @@ var books = [
 ];
 
 class Home extends React.Component {
-    
+    constructor(props) {
+        super(props);
+        console.log(props);
+        this.state = {
+            books: books
+        }
+    }
+
+   componentWillMount() {
+       var url = "http://localhost:8080/";
+       fetch (url, {
+           method : 'GET',
+           mode: "no-cors",
+           // origin : 'http://localhost:3306'
+       }).then(
+           (response) => {console.log(response); return JSON.parse(response);}
+       ).then ((data) => {
+           for (let i = 0; i < data.length; i++) {
+               var newBook = {
+                   name: data[i].name,
+                   Author: data[i].author,
+                   Date: data[i].date,
+                   img: 'http://localhost:8080/img/' + data[i].isbn + '.jpg'
+               };
+               books.push(newBook);
+           }
+           this.setState({
+               books : books
+           })
+       })
+   }
 
     render() {
         return (
             <Card.Group itemsPerRow={6}>
-                {books.map(book => (
-                    <Card key={book.name} value={book.name}>
-                        <Image src={book.img} size='large' rounded />
-                        <Card.Content>
-                            <Card.Header>
-                                {book.name}
-                            </Card.Header>
-                            <Card.Meta>
-                                {book.Date}
-                            </Card.Meta>
-                            <Card.Description>
-                                <Icon name='user' />{' '}{book.Author}
-                            </Card.Description>
-                        </Card.Content>
-                        <Card.Content extra>
-                            <div className='ui three buttons'>
-                                <Button basic color="pink">
-                                    <Icon name='empty heart' size='small' text='Like' />
-                                </Button>
-                                <Button basic color='green' >
-                                    <Icon name="add to cart" size='large' color='olive' text='Add to Cart'/>
-                                </Button>
-                                <Button basic color='red' >
-                                    <Icon name='shopping cart' size='large' color='orange' text='Just Take it' />
-                                </Button>
-                            </div>
-                        </Card.Content>
-                    </Card>
-                ))}
+                {this.state.books.map(function(book, idx) {
+                    return <BookCard book={book} key={idx}/>
+                })}
             </Card.Group>
         );
     }
