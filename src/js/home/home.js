@@ -1,6 +1,5 @@
 import React from 'react';
-// import { NavLink } from 'react-router-dom';
-import { Button, Card, Image, Icon} from 'semantic-ui-react';
+import {  Card } from 'semantic-ui-react';
 import BookCard from '../bookCard';
 
 import Le_Petit_Prince from '../../img/Le_Petit_Prince.jpg';
@@ -60,7 +59,6 @@ var books = [
 class Home extends React.Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             books: books
         }
@@ -70,17 +68,21 @@ class Home extends React.Component {
        var url = "http://localhost:8080/";
        fetch (url, {
            method : 'GET',
-           mode: "no-cors",
-           // origin : 'http://localhost:3306'
+           origin : "http://localhost:3000"
+           // 'no-cors' mode results in response body to be null
+           // mode: "no-cors",
        }).then(
-           (response) => {console.log(response); return JSON.parse(response);}
+           function (response) {
+               console.log(response);
+               return response.json();
+           }
        ).then ((data) => {
            for (let i = 0; i < data.length; i++) {
                var newBook = {
                    name: data[i].name,
                    Author: data[i].author,
                    Date: data[i].date,
-                   img: 'http://localhost:8080/img/' + data[i].isbn + '.jpg'
+                   img: 'http://localhost:8080/' + data[i].img
                };
                books.push(newBook);
            }

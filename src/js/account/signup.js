@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Grid, Form, Button, Header, Segment } from 'semantic-ui-react';
+import { Grid, Form, Button, Header, Segment, Modal, Icon } from 'semantic-ui-react';
 
 import '../../css/login.css';
 
@@ -7,20 +7,28 @@ class Signup extends Component {
   constructor(props) {
     super(props);
       this.state = {
+          modalOpen : false,
           phoneErr : false,
           emailErr: false,
           nameErr: false,
           pwdErr : false,
-          pwdEqual : false
+          pwdNotEqual : false
       }
-
   }
 
   checkName=() => {
-    this.setState({
-        nameErr: false
-    });
-  }
+    let name = document.getElementById("name").value;
+    let nameReg = /^\w{6,20}$/;
+    if (nameReg.test(name)) {
+        this.setState({
+            nameErr : false
+        })
+    } else {
+        this.setState({
+            nameErr : true
+        })
+    }
+  };
 
   checkPhone=() => {
       let phone = document.getElementById("phone").value;
@@ -34,8 +42,7 @@ class Signup extends Component {
             phoneErr: true
         });
       }
-  }
-
+  };
 
   checkEmail=() => {
     let email = document.getElementById("email").value;
@@ -43,7 +50,7 @@ class Signup extends Component {
     this.setState({
         emailErr : !emailReg.test(email)
     });
-  }
+  };
 
   checkPwd=() => {
     let pwd = document.getElementById("pwd").value;
@@ -51,15 +58,52 @@ class Signup extends Component {
     this.setState({
         pwdErr : !pwdreg.test(pwd)
     });
-  }
+  };
 
   checkRepwd=() => {
     let pwd = document.getElementById("pwd").value;
     let repwd = document.getElementById("repwd").value;
     this.setState({
-        pwdEqual : !(pwd === repwd)
+        pwdNotEqual : !(pwd === repwd)
     });
-  }
+  };
+
+  handleClose = () => this.setState({modalOpen : false});
+
+  _signup = () => {
+      if (this.state.nameErr || this.state.emailErr || this.state.phoneErr || this.state.pwdErr || this.state.pwdNotEqual ) {
+          this.setState({modalOpen : true});
+          alert("Invalid");
+          return;
+      }
+      let name = document.getElementById('name').value;
+      let phone = document.getElementById('phone').value;
+      let email = document.getElementById('email').value;
+      let pwd = document.getElementById('pwd').value;
+      if (!(name.length > 0 && phone.length > 0 && email.length > 0 && pwd.length > 0)) {
+          this.setState({modalOpen : true});
+          alert("invalid");
+          return;
+      }
+      const url = "http://localhost:8080/signup";
+      let body = 'userName=' + name + '&pwd=' + pwd + '&phone=' + phone + '&email=' + email;
+      fetch (url, {
+          body : body,
+          method : 'POST',
+          credentials : 'include',
+          headers : {
+              'Content-Type' : 'application/x-www-form-urlencoded'
+          },
+          origin : 'http://localhost:3000'
+      }).then (response => {
+          if (response === null) return null;
+          let ret = response.json();
+          console.log(ret.message);
+          this.props.history.push('/home');
+      }).catch (err => {
+          alert("Error occurred while sign up." + err);
+      })
+  };
 
   render() {
     return (
@@ -72,14 +116,30 @@ class Signup extends Component {
                 <Form.Input id='name' fluid icon='user' focus error={this.state.nameErr} iconPosition='left'
                             placeholder='User ID' onChange={this.checkName}/>
                 <Form.Input id='phone' fluid icon='phone' focus error={this.state.phoneErr} iconPosition='left'
-                            placeholder='Phone Number'onChange={this.checkPhone}/>
+                            placeholder='Phone Number' onChange={this.checkPhone}/>
                 <Form.Input id='email' fluid icon='mail' focus error={this.state.emailErr} iconPosition='left'
                             placeholder='Email Address' type='email' onChange={this.checkEmail}/>
                 <Form.Input id='pwd' fluid icon='lock' focus error={this.state.pwdErr } iconPosition='left'
                             type='password' placeholder='Password' onChange={this.checkPwd}/>
-                <Form.Input id='repwd' fluid icon='lock' focus error={this.state.pwdEqual}  iconPosition='left' type='password'
+                <Form.Input id='repwd' fluid icon='lock' focus error={this.state.pwdNotEqual} iconPosition='left' type='password'
                             placeholder='Reenter your password' onChange={this.checkRepwd}/>
-                <Button color='teal' fluid size='large' >Sign up</Button>
+                <Button color='teal' fluid size='large' onClick={this._signup}>Sign up</Button>
+                {/*<Modal trigger={<Button color='teal' fluid size='large' onClick={this._signup}>Sign up</Button>}
+                  open={this.state.modalOpen}
+                       onClose={this.handleClose}
+                       basic
+                       size='fullscreen'
+                       >
+                    <Header><Icon name='warning sign' color='red'/>Error</Header>
+                    <Modal.Content>
+                        <h3>Each item must be filled properly.</h3>
+                    </Modal.Content>
+                    <Modal.Action>
+                        <Button color='red' onClick={this.handleClose} inverted>
+                            <Icon name='checkmark'/>Got it
+                        </Button>
+                    </Modal.Action>
+                </Modal>*/}
               </Segment>
             </Form>
           </Grid.Column>

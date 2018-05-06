@@ -28,54 +28,75 @@ const notLoggedMenu = () => {
         </Dropdown.Item>
       </Dropdown.Menu>
   );
-}
+};
 
-class LoggedMenu extends React.Component {
-  render() {
-    return(
+const LoggedMenu = (user, act) => {
+    return (
         <Dropdown.Menu>
-          <Dropdown.Header icon='user' content={this.props.user}/>
-          <Dropdown.Item text='Account Center'/>
-          <Dropdown.Item icon='shopping cart' text='Cart'/>
-          <Dropdown.Item icon='power off' text='Log out'/>
+            <Dropdown.Header icon='user' content={user}/>
+            <Dropdown.Item>
+                <NavLink to='/home/account'>Account Center</NavLink>
+            </Dropdown.Item>
+            <Dropdown.Item>
+                <NavLink to='/home/cart'><Icon name='shopping cart'/>Cart</NavLink>
+            </Dropdown.Item>
+            <Dropdown.Item icon='power' text='Log out' onClick={act}/>
         </Dropdown.Menu>
     )
-  }
-}
+};
 
 class HeaderBar extends React.Component {
   path = {
-    pathname : '/search',
-      search : ''
-  }
+    pathname : '/home/s',
+    search : ''
+  };
 
-  catagory = 'name'
+  catagory = 'name';
   constructor(props) {
     super(props);
-    // console.log(props);
   }
 
-    getUser() {
-        var cookies = decodeURIComponent(document.cookie);
-        var ca = cookies.split(';');
-        for (let i = 0; i !== ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) === ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf("user=") === 0) {
-                return c.substring("user=".length, c.length)
-            }
-        }
-        return null;
-    }
+
+  getUser() {
+      const cookies = decodeURIComponent(document.cookie);
+      let ca = cookies.split(';');
+      const user = 'userName';
+      for (let i = 0; i !== ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) === ' ') {
+              c = c.substring(1);
+          }
+          if (c.indexOf(user) === 0) {
+              return c.substring(user.length + 1, c.length);
+          }
+      }
+      return null;
+  }
+
+  _logout = () => {
+      const url = 'http://localhost:8080/logout?userName=' + this.getUser();
+      fetch(url, {
+          method : 'GET',
+          headers : {
+              'Content-Type' : 'application/x-www-form-application'
+          },
+          credentials : 'include'
+      }).then(response => {
+          if (response.status !== 200) {
+              console.log("Error while logout.");
+          }
+          this.props.history.push('/home');
+          // clean up after logout
+      })
+  };
 
   _toggleSearch=() => {
-      var searchContent = document.getElementById("search").value;
+      const searchContent = document.getElementById("search").value;
       console.log(this.props);
-      this.path.search='?s=' + searchContent + '&catagory=' + this.catagory;
+      this.path.search='?q=' + searchContent + '&catagory=' + this.catagory;
       this.props.history.push(this.path);
-  }
+  };
+
   render() {
     return (
       <div id="header_bar">
@@ -105,7 +126,6 @@ class HeaderBar extends React.Component {
                 <Icon name='search'/>
               <Select id = 'catagory' name="catagory" options={catagory} defaultValue='name' onChange={(value, text ) =>{
                   this.catagory = text.value;
-                // console.log(text.value);
               }}/>
               <Button compact onClick={this._toggleSearch}>
                   {/*<!--NavLink to='/search'-->*/}
@@ -119,24 +139,7 @@ class HeaderBar extends React.Component {
                 */}
             <Grid.Column width={2} textAlign='center' floated='right' verticalAlign='middle'>
               <Dropdown icon={<Icon name='user' size='large' color='teal'/>} floating labeled button>
-                  {this.getUser() == null ? notLoggedMenu() : <LoggedMenu user={this.getUser()}/>}
-                  {/*<Dropdown.Menu>
-                  <Dropdown.Item >
-                    <NavLink to='/login'>
-                      Sign in
-                      </NavLink>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <NavLink to='/signup'>
-                      Sign up
-                      </NavLink>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <NavLink to='/cart'>
-                      <Icon name='shopping cart' />{' '}shopping cart
-                    </NavLink>
-                  </Dropdown.Item>
-                </Dropdown.Menu>*/}
+                  {this.getUser() == null ? notLoggedMenu() : LoggedMenu(this.getUser(), this._logout)}
               </Dropdown>
             </Grid.Column>
           </Grid.Row>

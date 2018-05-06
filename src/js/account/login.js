@@ -16,25 +16,24 @@ class Login extends Component {
      * Post user id and password to backend
      */
     _login=() => {
-        var userName = document.getElementById("userName").value;
+        const userName = document.getElementById("userName").value;
         console.log("user Name: " + userName);    // <<<<<<<<<<<<<<<<<< For DEBUG
-        var pwd = document.getElementById("pwd").value;
+        const pwd = document.getElementById("pwd").value;
         console.log("Password: " + pwd);          // <<<<<<<<<<<<<<<<<< For DEBUG
         const body = "userName=" + userName + "&pwd=" + pwd;
         console.log(body);                        // <<<<<<<<<<<<<<<<<< For DEBUG
         // let url = "http://localhost:8080/login?userId=" + userid.value + "&pwd=" + pwd.value;
         let url = 'http://localhost:8080/login';
-        var that = this;
+        const that = this;
 
         fetch (url, {
             method: 'POST',
             body: body,
             credentials: 'include',
             headers: {
-                // 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0;Wind64;x64)',
                 'Content-Type': 'application/x-www-form-urlencoded',
-            }
-            // origin: "http://localhost:3000"
+            },
+            origin: "http://localhost:3000"
         }).then(
             (response) => {
                 if (response.status !== 200) {

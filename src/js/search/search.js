@@ -1,21 +1,12 @@
 import React from 'react';
-import {Icon, Card, Button, Grid, Label, Segment, Input, Image, Statistic} from 'semantic-ui-react';
+import {Icon, Card, Grid, Label} from 'semantic-ui-react';
 
-import HeaderBar from '../header';
-import Footer from '../footer';
 import BookCard from '../bookCard';
 
 import '../../css/home.css';
 
 import The_Old_Man_And_The_Sea from '../../img/The_Old_Man_And_The_Sea.jpg';
 import One_Hundred_Years_of_Solitude from '../../img/One_Hundred_Years_of_Solitude.jpg';
-import Le_Petit_Prince from '../../img/Le_Petit_Prince.jpg';
-import Bible from '../../img/Bible.jpg';
-import Don_Quijote from '../../img/Don_Quijote_de_la_Mancha.jpg';
-import Harry_Potter from '../../img/Harry_Potter.jpeg';
-import Journey_To_The_West from '../../img/Journey_To_The_West.jpg';
-import Stray_Birds from '../../img/Stray_Birds.jpg';
-import The_Dream_of_the_Red_Chamber from '../../img/The_Dream_of_the_Red_Chamber.jpg';
 
 var result = [
     {
@@ -92,30 +83,29 @@ class Search extends React.Component {
     }
 
     componentWillMount() {
-
-        var query = this.props.history.location.search;
+        const query = this.props.history.location.search;
         let pos = query.indexOf("=");
-        if (pos == query.length - 1) {
+        if (pos === query.length - 1) {
             this.setState({
                 validQuery : false
-            })
+            });
             return;
         }
-        var url = 'http://localhost:8080/' + this.props.history.location.search;
+        const url = 'http://localhost:8080/' + this.props.history.location.search;
         fetch ( url, {
-            mode : 'no-cors',
+            method : 'GET'
         }).then (response => {return response.json()})
             .then((data) => {
-                for (let i = 0; i != data.length; i++) {
+                for (let i = 0; i !== data.length; i++) {
                     let book = {
                         name : data[i].name,
                         Author : data[i].author,
-                        img : 'http://localhost:8080/img/' + data[i].isbn + '.jpg',
+                        img : 'http://localhost:8080/' + data[i].img,
                         Date : data[i].date,
                         Language : data[i].lang,
                         price : data[i].price,
-                        amount : data[i].amount
-                    }
+                        amount : data[i].stock
+                    };
                     result.push(book);
                 }
                 this.setState({
