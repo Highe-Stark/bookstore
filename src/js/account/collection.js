@@ -1,9 +1,13 @@
 import React from 'react';
+import {Image} from 'semantic-ui-react';
+import EmptyCollection from '../../img/empty-collection.png';
 
 class Collection extends React.Component {
     render() {
         return (
-            <p>Sorry, you don't have any books collected yet...</p>
+            <div>
+                <Image src={EmptyCollection} fluid href='/home'/>
+            </div>
         )
     }
 }

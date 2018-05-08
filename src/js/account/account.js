@@ -1,6 +1,9 @@
 import React from 'react';
 import {Grid, Header, Icon, Segment} from 'semantic-ui-react';
-import {NavLink, Link} from 'react-router-dom';
+import {NavLink, Link, Route} from 'react-router-dom';
+
+import UserInfo from './userInfo';
+import Collection from './collection';
 
 class Account extends React.Component {
     render () {
@@ -15,19 +18,24 @@ class Account extends React.Component {
                                 </Header>
                             </Segment>
                             <Segment>
-                                <NavLink to='/user_info'>
+                                <NavLink to='/home/account/info'>
                                     <Icon name='user' size='small'/>{' '}User Info
                                 </NavLink>
                             </Segment>
                             <Segment>
-                                <Link to='/collection'>
+                                <Link to='/home/account/collection'>
                                     <Icon name='star' color='yellow'/>{' '}Collection
                                 </Link>
                             </Segment>
                         </Segment.Group>
                     </Grid.Column>
                     <Grid.Column width={13}>
-                        we will jump to info page
+                        {
+                            // we will jump to info page
+                        }
+                        <Route path='/home/account/info' component={UserInfo}/>
+                        <Route path='/home/account/collection' component = {Collection}/>
+
                     </Grid.Column>
                 </Grid.Row>
             </Grid>
