@@ -19,8 +19,8 @@ class App extends React.Component {
     render() {
         return (
             <div className='home'>
-                <HeaderBar history={this.props.history}/>
-                <Navigator history={this.props.history}/>
+                <HeaderBar {...this.props}/>
+                <Navigator {...this.props}/>
                 <div id='homeContent'>
                     <Route exact path="/home" component={Home}/>
                     <Route path="/home/s" component={Search}/>

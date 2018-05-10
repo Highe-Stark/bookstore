@@ -77,9 +77,9 @@ class HeaderBar extends React.Component {
       const url = 'http://localhost:8080/logout?userName=' + this.getUser();
       fetch(url, {
           method : 'GET',
-          headers : {
+          /* headers : {
               'Content-Type' : 'application/x-www-form-application'
-          },
+          },*/
           credentials : 'include'
       }).then(response => {
           if (response.status !== 200) {

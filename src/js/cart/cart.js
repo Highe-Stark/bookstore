@@ -56,7 +56,6 @@ class Cart extends Component {
     render() {
         return (
             <div>
-                <HeaderBar/>
                 <Divider/>
                 <Grid className='searchResult'>
                     {

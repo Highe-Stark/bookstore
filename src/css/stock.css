@@ -1,0 +1,22 @@
+.stock .header{
+    background-color : #FF005E;
+}
+
+.stock .icon {
+    color : rgba(255, 255, 255, 0.8);
+}
+
+.btn-act {
+    margin-top : 1.0rem;
+    margin-bottom : 1.0rem;
+}
+
+.btn-right {
+    margin-left : 0.2rem;
+    margin-right : 2.3rem;
+}
+
+.btn-wronog {
+    margin-left : 2.3rem;
+    margin-right : 0.2rem;
+}
