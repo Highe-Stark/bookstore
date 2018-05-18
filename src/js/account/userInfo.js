@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 import {Segment, Input, Image, Icon, Radio, Label, Form, Button} from 'semantic-ui-react';
 

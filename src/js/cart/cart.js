@@ -1,3 +1,5 @@
+'use strict';
+
 import React, {Component} from 'react';
 import { Divider, Grid } from 'semantic-ui-react';
 import HeaderBar from '../header';
@@ -35,18 +37,27 @@ class Cart extends Component {
         }
     }
 
-    increase=(e) => {
-        result[e].amount += 1;
-        this.setState({
-            res : result
-        });
-
+    increase=(e, value) => {
+        // result[e].amount += 1;
+        // this.setState({
+        //     res : result
+        // });
+        value.amount += 1;
+        this.setState({res : result});
     }
 
-    decrease=(e) => {
-        result[e].amount -= 1;
-        if (result[e].amount <= 0) {
-            result.splice(e, 1);
+    decrease=(e, value) => {
+        // result[e].amount -= 1;
+        // if (result[e].amount <= 0) {
+        //     result.splice(e, 1);
+        // }
+        // this.setState({
+        //     res : result
+        // });
+        value.amount -= 1;
+        if (value.amount <= 0) {
+            let idx = result.indexOf(value);
+            result.splice(idx, 1);
         }
         this.setState({
             res : result
@@ -72,28 +83,3 @@ class Cart extends Component {
 }
 
 export default Cart;
-
-/*
-
-                                <Grid.Row key={idx} >
-                                    <Grid.Column width={2}><Image src={book.img} size='small' rounded/></Grid.Column>
-                                    <Grid.Column width={5} verticalAlign='middle'>
-                                        <Card header={book.name} meta={book.Author} extra={book.Date}/>
-                                    </Grid.Column>
-                                    <Grid.Column width={1}>{book.language}</Grid.Column>
-                                    <Grid.Column width={3}>
-                                        <Statistic size='small'>
-                                            <Statistic.Value>
-                                                <Icon name='dollar'/>{book.price}
-                                            </Statistic.Value>
-                                        </Statistic>
-                                    </Grid.Column>
-                                    <Grid.Column width={5}>
-                                        <Input type='number' value={book.amount} compact>
-                                            <Button icon='plus' size='small' onClick={() => {this.increase(idx)}}/>
-                                            <input />
-                                            <Button icon='minus' size='small' onClick={() => {this.decrease(idx)}}/>
-                                        </Input>
-                                    </Grid.Column>
-                                </Grid.Row>
-*/

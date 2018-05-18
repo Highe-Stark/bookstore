@@ -1,9 +1,19 @@
+'use strict';
+
 import React from 'react';
 import {Card, Icon, Button, Image} from 'semantic-ui-react';
 
 class BookCard extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            like : false
+        }
+    }
+    toggleLike = () => {
+        this.setState({
+            like : !this.state.like
+        });
     }
     render() {
         return (
@@ -22,8 +32,8 @@ class BookCard extends React.Component {
                 </Card.Content>
                 <Card.Content extra>
                     <div className='ui three buttons'>
-                        <Button basic color="pink">
-                            <Icon name='empty heart' size='small' text='Like' />
+                        <Button basic color="pink" onClick={this.toggleLike}>
+                            <Icon name={this.state.like ? 'heart' : 'empty heart'} size='small' text='Like' />
                         </Button>
                         <Button basic color='green' >
                             <Icon name="add to cart" size='large' color='olive' text='Add to Cart'/>

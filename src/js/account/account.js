@@ -1,3 +1,4 @@
+'use strict';
 import React from 'react';
 import {Grid, Header, Icon, Segment} from 'semantic-ui-react';
 import {NavLink, Link, Route} from 'react-router-dom';

@@ -1,3 +1,4 @@
+'use strict';
 import React from 'react';
 import { Icon, Image, Input, Header, Dropdown, Grid, Select, Button } from 'semantic-ui-react';
 import {NavLink } from 'react-router-dom';

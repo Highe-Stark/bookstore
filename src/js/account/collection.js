@@ -1,3 +1,4 @@
+'use strict';
 import React from 'react';
 import {Image} from 'semantic-ui-react';
 import EmptyCollection from '../../img/empty-collection.png';

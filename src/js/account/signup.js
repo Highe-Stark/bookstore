@@ -1,3 +1,4 @@
+'use strict';
 import React, {Component} from 'react';
 import { Grid, Form, Button, Header, Segment, Modal, Icon } from 'semantic-ui-react';
 

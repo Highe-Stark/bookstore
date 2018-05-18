@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 import {Input, Image, Button, Header, Dropdown, Form, Table, Search, Icon, Grid, Label} from 'semantic-ui-react';
 import {NavLink, Route} from 'react-router-dom';
@@ -227,31 +229,77 @@ class Add extends React.Component {
         console.log(this.state);
     };
 
+    submitProfile = () =>{
+        let newProfile = document.getElementById('profileUpload').files[0];
+        console.log(newProfile);
+        let formData = new FormData();
+        formData.append('new_profile', newProfile);
+        let url = 'http://localhost:8080/api/upload';
+        fetch (url, {
+            method : 'POST',
+            body : formData
+        }).then(response => {
+            if (response.status !== 200) {
+                alert('Upload profile failed.');
+                return null;
+            }
+            return response.json();
+        }).then(data => {
+            if (data !== null) {
+                this.setState({
+                    img : data.img
+                })
+            }
+        })
+    };
+
     render () {
         const { name, author, date, isbn, lang, price, stock, img } = this.state;
         return (
             <Grid>
                 <Grid.Column width={3}>
                     <Image src={img} bordered/>
+                    <Form id='profile-form' method='POST' enctype='multipart/form-data' onSubmit={this.submitProfile}>
+                        <Input type='file' id='profileUpload' name='profileUpload' />
+                        <Button type='submit' value='Upload' content='Update profile'/>
+                    </Form>
                 </Grid.Column>
-                <Grid.Column width={13}>
-                    <Form.Group width={9}>
-                        <Header as='h3'>Book Name{' '}</Header>
-                        <Form.Input type='text' name='name' value={name} placeholder='Book Name' onChange={this.handleChange} />
-                        <Header as='h3'>Author{' '}</Header>
-                        <Form.Input type='text' name='author' value={author} placeholder='Book Author' onChange={this.handleChange}/>
-                        <Header as='h4'>Publish Date{' '}</Header>
-                        <Form.Input type='text' name='date' value={date} placeholder='2008-08-01' onChange={this.handleChange}/>
-                        <Header as='h4'>ISBN{' '}</Header>
-                        <Form.Input type='text' name='isbn' value={isbn} placeholder='***-*-***-*****-*' onChange={this.handleChange}/>
-                        <Header as='h4'> Language{' '}</Header>
-                        <Form.Input type='text' name='lang' value={lang} placeholder='language' onChange={this.handleChange}/>
-                        <Header as='h3'> Price{' '}</Header>
-                        <Form.Input type='number' name='price' value={price} onChange={this.handleChange}/>
-                        <Header as='h3'> Stock{' '}</Header>
-                        <Form.Input type='number' name='stock' value={stock} onChange={this.handleChange}/>
+                <Grid.Column width={7}>
+                    <Form.Group>
+                        <Form.Field>
+                            <span><Header as='h3'>Book Name</Header></span>
+                            <Input type='text' name='name' value={name} placeholder='Book name' onChange={this.handleChange} fluid/>
+                        </Form.Field>
+                        <Form.Field>
+                            <span><Header as='h3'>Author</Header></span>
+                            <Input type='text' name='author' value={author} placeholder='Book Author' onChange={this.handleChange} fluid/>
+                        </Form.Field>
+                        <Form.Field>
+                            <span><Header as='h3'>Publish Date</Header></span>
+                            <Input type='text' name='date' value={date} placeholder='publish date' onChange={this.handleChange} fluid/>
+                        </Form.Field>
+                        <Form.Field>
+                            <span><Header as='h3'>ISBN</Header></span>
+                            <Input type='text' name='isbn' value={isbn} placeholder='ISBN' onChange={this.handleChange} fluid/>
+                        </Form.Field>
+                        <Form.Field>
+                            <span><Header as='h3'>Language</Header></span>
+                            <Input type='text' name='lang' value={lang} onChange={this.handleChange} fluid/>
+                        </Form.Field>
                     </Form.Group>
-
+                </Grid.Column>
+                <Grid.Column witdth={6}>
+                    <Form.Group>
+                        <Form.Field>
+                            <span><Header as='h3'>Price</Header></span>
+                            <Input type='number' name='price' value={price} onChange={this.handleChange} fluid/>
+                        </Form.Field>
+                        <Form.Field>
+                            <span><Header as='h3'>Stock</Header></span>
+                            <Input type='number' name='stock' value={stock} onChange={this.handleChange} fluid/>
+                        </Form.Field>
+                    </Form.Group>
+                    <div style={{marginTop : '1rem'}}>
                     <Button name='submit' className='btn-right btn-act'
                             value={{name, author, date, isbn, lang, price, stock, img}} onClick={this.submitBook}>
                         <Icon name='checkmark' color='green' size='large'/>{' '}Submit
@@ -259,7 +307,7 @@ class Add extends React.Component {
                     <NavLink to='/stock/main'>
                         <Button className='btn-wrong btn-act'><Icon name='remove' color='red' size='large'/>{' '}Cancel</Button>
                     </NavLink>
-
+                    </div>
                 </Grid.Column>
             </Grid>
         )
@@ -333,6 +381,7 @@ class Stock extends React.Component {
                     <Route path='/stock/main' component={BookList}/>
                     <Route path='/stock/add' component={Add}/>
                 </div>
+                <div style={{marginTop : '2rem'}}></div>
                 <Footer/>
             </div>
         )
@@ -340,3 +389,19 @@ class Stock extends React.Component {
 }
 
 export default Stock;
+{/*
+                        <Header as='h3'>Book Name{' '}</Header>
+                        <Form.Input type='text' name='name' value={name} placeholder='Book Name' onChange={this.handleChange} />
+                        <Header as='h3'>Author{' '}</Header>
+                        <Form.Input type='text' name='author' value={author} placeholder='Book Author' onChange={this.handleChange}/>
+                        <Header as='h4'>Publish Date{' '}</Header>
+                        <Form.Input type='text' name='date' value={date} placeholder='2008-08-01' onChange={this.handleChange}/>
+                        <Header as='h4'>ISBN{' '}</Header>
+                        <Form.Input type='text' name='isbn' value={isbn} placeholder='***-*-***-*****-*' onChange={this.handleChange}/>
+                        <Header as='h4'> Language{' '}</Header>
+                        <Form.Input type='text' name='lang' value={lang} placeholder='language' onChange={this.handleChange}/>
+                        <Header as='h3'> Price{' '}</Header>
+                        <Form.Input type='number' name='price' value={price} onChange={this.handleChange}/>
+                        <Header as='h3'> Stock{' '}</Header>
+                        <Form.Input type='number' name='stock' value={stock} onChange={this.handleChange}/>
+                        */}

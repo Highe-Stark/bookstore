@@ -1,5 +1,7 @@
+'use strict';
+
 import React from 'react';
-import {Icon, Card, Grid, Label} from 'semantic-ui-react';
+import {Icon, Card, Grid, Label, Button} from 'semantic-ui-react';
 
 import BookCard from '../bookCard';
 
@@ -127,6 +129,21 @@ class Search extends React.Component {
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
+                <div>
+                    <Button.Group>
+                        <Button icon disabled>
+                            <Icon name='sort'/>
+                        </Button>
+                        <Button icon>
+                            {'Book Name'}
+                            <Icon name='sort alphabet ascending'/>
+                        </Button>
+                        <Button icon>
+                            {'Price'}
+                            <Icon name='sort numeric ascending'/>
+                        </Button>
+                    </Button.Group>
+                </div>
                 <Card.Group itemsPerRow={6}>
                     {
                         this.state.res.map(function(book, idx) {

@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 import {  Card } from 'semantic-ui-react';
 import BookCard from '../bookCard';
@@ -9,8 +11,6 @@ import Harry_Potter from '../../img/Harry_Potter.jpeg';
 import Journey_To_The_West from '../../img/Journey_To_The_West.jpg';
 import Stray_Birds from '../../img/Stray_Birds.jpg';
 import The_Dream_of_the_Red_Chamber from '../../img/The_Dream_of_the_Red_Chamber.jpg';
-// import The_Old_Man_And_The_Sea from '../../img/The_Old_Man_And_The_Sea.jpg';
-// import One_Hunderd_Years_of_Solitude from '../../img/One_Hundred_Years_of_Solitude.jpg';
 
 var books = [
     {name: 'Le Petit Prince', 
@@ -68,15 +68,18 @@ class Home extends React.Component {
        var url = "http://localhost:8080/";
        fetch (url, {
            method : 'GET',
-           origin : "http://localhost:3000"
-           // 'no-cors' mode results in response body to be null
-           // mode: "no-cors",
+           origin : "http://localhost:8080"
        }).then(
            function (response) {
                console.log(response);
+               // if (response == null) return null;
                return response.json();
            }
-       ).then ((data) => {
+       ).catch(err => {
+           console.log(err);
+           return null;
+       }).then ((data) => {
+           if (data === null) return;
            for (let i = 0; i < data.length; i++) {
                var newBook = {
                    name: data[i].name,

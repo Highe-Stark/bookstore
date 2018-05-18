@@ -1,4 +1,4 @@
-// import _ from 'lodash';
+'use strict';
 import React, {Component} from 'react';
 import {Grid, Icon, Label, Dropdown} from 'semantic-ui-react';
 

@@ -1,3 +1,5 @@
+'use strict';
+
 import React from 'react';
 import {Grid, Card, Statistic, Icon, Input, Image, Button} from 'semantic-ui-react';
 
@@ -7,6 +9,7 @@ class BookItem extends React.Component {
     }
 
     render() {
+        let book = this.props.book;
         return (
             <Grid.Row divided>
                 <Grid.Column width={2}><Image src={this.props.book.img} size='small' rounded/></Grid.Column>
@@ -22,10 +25,10 @@ class BookItem extends React.Component {
                     </Statistic>
                 </Grid.Column>
                 <Grid.Column width={5}>
-                    <Input type="number" value={this.props.book.amount} compact>
-                        <Button icon='plus' size='small' onClick={() => {this.props.increase(this.props.rowid)}}/>
+                    <Input type="number" value={book.amount} compact>
+                        <Button icon='plus' size='small' onClick={(e, {book}) => {this.props.increase(book)}}/>
                         <input/>
-                        <Button icon='minus' size='small' onClick={() => {this.props.decrease(this.props.rowid)}}/>
+                        <Button icon='minus' size='small' onClick={(e, {book}) => {this.props.decrease(book)}}/>
                     </Input>
                 </Grid.Column>
             </Grid.Row>

@@ -1,3 +1,4 @@
+'use strict';
 import React, {Component} from 'react';
 import { Button, Form, Grid, Segment, Header, Icon, Input, Message} from 'semantic-ui-react';
 import {Link, withRouter} from 'react-router-dom';

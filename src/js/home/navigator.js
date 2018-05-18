@@ -1,3 +1,4 @@
+'use strict';
 import React, {Component} from 'react';
 import { Button } from 'semantic-ui-react';
 // HISTORY, EDUCATION, TOOL, COMPUTER, POLITICAL, MILITARYY, SCIENCE, CHILDREN, FOOD, PHOTOGRAPHY
