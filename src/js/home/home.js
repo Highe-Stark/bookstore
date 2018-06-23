@@ -13,46 +13,54 @@ import Stray_Birds from '../../img/Stray_Birds.jpg';
 import The_Dream_of_the_Red_Chamber from '../../img/The_Dream_of_the_Red_Chamber.jpg';
 
 var books = [
-    {name: 'Le Petit Prince', 
-    Author: 'Antoine de Saint-Exupéry', 
-    Date: 'April 1943',
-    img: Le_Petit_Prince
+    {
+        name: 'Le Petit Prince',
+        Author: 'Antoine de Saint-Exupéry',
+        Date: 'April 1943',
+        img: Le_Petit_Prince,
+        isbn: '1000000000'
     },
     {
         name: 'Bible',
         Author: 'Moses, Joshua, Samuel, Nathan, Gad, ...',
         Date: '5th century BCE',
-        img: Bible
+        img: Bible,
+        isbn: '1000010000'
     },
     {
         name: 'Don Quijote de la Mancha',
         Author: 'Miguel de Cervantes',
         Date: '1605, 1615',
-        img: Don_Quijote
+        img: Don_Quijote,
+        isbn: '1000020002'
     },
     {
         name: 'Harry Potter',
         Author: 'J.K. Rowling',
         Date: '26 June 1997 – 21 July 2007',
-        img: Harry_Potter
+        img: Harry_Potter,
+        isbn: '10000200008'
     },
     {
         name: '红楼梦',
         Author: '曹雪芹',
         Date: '1791',
-        img: The_Dream_of_the_Red_Chamber
+        img: The_Dream_of_the_Red_Chamber,
+        isbn: '100003003490'
     },
     {
         name: 'Stray Birds',
         Author: 'Rabindranath Tagore',
         Date: '1916',
-        img: Stray_Birds
+        img: Stray_Birds,
+        isbn: '100004000390'
     },
     {
         name: '西游记',
         Author: '吴承恩',
         Date: '1600s',
-        img: Journey_To_The_West
+        img: Journey_To_The_West,
+        isbn: '10000500090'
     }
 ];
 
@@ -65,10 +73,10 @@ class Home extends React.Component {
     }
 
    componentWillMount() {
-       var url = "http://localhost:8080/";
+       var url = "http://localhost:8080/b/";
        fetch (url, {
            method : 'GET',
-           origin : "http://localhost:8080"
+           // origin : "http://localhost:8080"
        }).then(
            function (response) {
                console.log(response);
@@ -85,7 +93,8 @@ class Home extends React.Component {
                    name: data[i].name,
                    Author: data[i].author,
                    Date: data[i].date,
-                   img: 'http://localhost:8080/' + data[i].img
+                   img: 'http://localhost:8080/' + data[i].img,
+                   isbn: data[i].isbn
                };
                books.push(newBook);
            }

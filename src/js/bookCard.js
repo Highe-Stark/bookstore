@@ -11,10 +11,35 @@ class BookCard extends React.Component {
         }
     }
     toggleLike = () => {
+        const isbn = this.props.book.isbn;
+        fetch ('http://localhost:8080/u/like?isbn=' + isbn, {method : 'GET'})
+            .then((response) => { console.log(
+                'like ' + isbn
+            );
+            console.log(response);
+            });
         this.setState({
             like : !this.state.like
         });
-    }
+    };
+
+    toggleCart =(e, value) => {
+        const isbn = this.props.book.isbn;
+        const url = 'http://localhost:8080/b/add_cart?isbn=' + isbn;
+        fetch (url, {method: 'GET'})
+            .then((response) => {
+                if (response.status != 200) {
+                    alert('Add to cart failed.');
+                    return;
+                }
+                console.log('Add book { isbn : ' + isbn + ' } to cart');
+            })
+            .catch ((err) => {
+                console.log("Error ! \n" + err);
+            })
+    };
+
+
     render() {
         return (
             <Card>
@@ -35,7 +60,7 @@ class BookCard extends React.Component {
                         <Button basic color="pink" onClick={this.toggleLike}>
                             <Icon name={this.state.like ? 'heart' : 'empty heart'} size='small' text='Like' />
                         </Button>
-                        <Button basic color='green' >
+                        <Button basic color='green' onClick={this.toggleCart}>
                             <Icon name="add to cart" size='large' color='olive' text='Add to Cart'/>
                         </Button>
                         <Button basic color='red' >

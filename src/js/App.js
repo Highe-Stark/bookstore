@@ -22,7 +22,9 @@ class App extends React.Component {
         return (
             <div className='home'>
                 <HeaderBar {...this.props}/>
-                <Navigator {...this.props}/>
+                {
+                 // <Navigator {...this.props}/>
+                }
                 <div id='homeContent'>
                     <Route exact path="/home" component={Home}/>
                     <Route path="/home/s" component={Search}/>

@@ -98,9 +98,16 @@ class Signup extends Component {
           origin : 'http://localhost:3000'
       }).then (response => {
           if (response === null) return null;
+          if (response.status !== 200) {
+              if (response.status == 403) {
+                  alert("User name is used.");
+                  this.props.history.push('/signup');
+                  return;
+              }
+          }
           let ret = response.json();
           console.log(ret.message);
-          this.props.history.push('/home');
+          this.props.history.push('/login');
       }).catch (err => {
           alert("Error occurred while sign up." + err);
       })

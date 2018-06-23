@@ -1,6 +1,6 @@
 'use strict';
 import React, {Component} from 'react';
-import { Button, Form, Grid, Segment, Header, Icon, Input, Message} from 'semantic-ui-react';
+import { Button, Form, Grid, Segment, Header, Icon, Input, Message, Checkbox} from 'semantic-ui-react';
 import {Link, withRouter} from 'react-router-dom';
 import '../../css/login.css';
 
@@ -9,32 +9,29 @@ class Login extends Component {
         super(props);
         console.log(props);
         this.state = {
-            logged: false
+            name: '',
+            password: '',
+            logged: false,
+            admin : false
         }
     }
 
     /*
      * Post user id and password to backend
      */
-    _login=() => {
-        const userName = document.getElementById("userName").value;
-        console.log("user Name: " + userName);    // <<<<<<<<<<<<<<<<<< For DEBUG
-        const pwd = document.getElementById("pwd").value;
-        console.log("Password: " + pwd);          // <<<<<<<<<<<<<<<<<< For DEBUG
-        const body = "userName=" + userName + "&pwd=" + pwd;
+    _login=(username, password) => {
+        // const userName = document.getElementById("userName").value;
+        console.log("user Name: " + username);    // <<<<<<<<<<<<<<<<<< For DEBUG
+        // const pwd = document.getElementById("pwd").value;
+        console.log("Password: " + password);          // <<<<<<<<<<<<<<<<<< For DEBUG
+        let body = "userName=" + username + "&pwd=" + password;
         console.log(body);                        // <<<<<<<<<<<<<<<<<< For DEBUG
         // let url = "http://localhost:8080/login?userId=" + userid.value + "&pwd=" + pwd.value;
-        let url = 'http://localhost:8080/login';
+        let url = 'http://localhost:8080/login?admin=0&' + body;
         const that = this;
 
         fetch (url, {
-            method: 'POST',
-            body: body,
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            origin: "http://localhost:3000"
+            method: 'GET'
         }).then(
             (response) => {
                 if (response.status !== 200) {
@@ -56,9 +53,46 @@ class Login extends Component {
             console.log("Fetch Error: " + err);
             this.props.history.push('/signup');
       });
+    };
+
+    admin_login = (username, password) => {
+        console.log("**** Administrator login *****\nAdmin name: " + username + "\nPassword: " + password);
+        const url = 'http://localhost:8080/login?admin=1&userName=' + username + '&pwd=' + password;
+        fetch (url, {
+            method: 'GET'
+        }).then((response) => {
+            let status = response.status;
+            if (status != 200) {
+                console.log('Login failed! ' + response.statusText);
+                document.getElementById("userName").value = "";
+                document.getElementById("pwd").value = "";
+            }
+            this.setState({
+                logged : true
+            });
+            this.props.history.push('/stock');
+        }).catch((err) => {
+            alert('Fetch Error: ' + err);
+            this.props.history.push('/signup');
+        })
+    };
+
+    toggle = (e, {name, value}) =>
+    {
+        console.log(value);
+        this.setState({[name]: !value})
+    };
+
+    handleChange = (e, {name, value}) => {
+        this.setState({
+            [name]: value
+        });
+        console.log(this.state);
     }
 
   render() {
+    const {name, password, logged, admin} = this.state;
+
     return (
       <div id='login_form' className='login'>
         <Grid textAlign="center" verticalAlign='middle' style={{ height: '100%' }}>
@@ -69,12 +103,18 @@ class Login extends Component {
         <Form size='large'>
           <Segment piled>
           <Form.Field>
-            <Input id='userName' icon='user' iconPosition='left' fluid placeholder="User Name"/>
+            <Input id='userName' name='name' value={name} onChange={this.handleChange}
+                   icon='user' iconPosition='left' fluid placeholder="User Name"/>
           </Form.Field>
           <Form.Field>
-            <Input id='pwd' icon='lock' iconPosition='left' type='password' fluid placeholder='Password'/>
+            <Input id='pwd' name='password' value={password} onChange={this.handleChange}
+                   icon='lock' iconPosition='left' type='password' fluid placeholder='Password'/>
           </Form.Field>
-          <Button color='teal' fluid size='large' onClick={this._login}>Sign in</Button>
+              <Form.Field>
+                  <Checkbox toggle name='admin' value={admin} checked={admin} onChange={this.toggle}/>Admin
+              </Form.Field>
+          <Button color='teal' fluid size='large' onClick={(e, value) =>
+            {admin ? this.admin_login(name, password) : this._login(name, password)}}>Sign in</Button>
           </Segment>
         </Form>
             <Message>

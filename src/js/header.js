@@ -41,6 +41,9 @@ const LoggedMenu = (user, act) => {
             <Dropdown.Item>
                 <NavLink to='/home/cart'><Icon name='shopping cart'/>Cart</NavLink>
             </Dropdown.Item>
+            <Dropdown.Item>
+                <NavLink to='/stock'><Icon name='cubes'/>Stock</NavLink>
+            </Dropdown.Item>
             <Dropdown.Item icon='power' text='Log out' onClick={act}/>
         </Dropdown.Menu>
     )
@@ -55,8 +58,15 @@ class HeaderBar extends React.Component {
   catagory = 'name';
   constructor(props) {
     super(props);
+    this.state = {
+        user : null,
+        admin : false
+    }
   }
 
+  componentDidMount() {
+      this.getUser();
+  }
 
   getUser() {
       const cookies = decodeURIComponent(document.cookie);
@@ -68,7 +78,15 @@ class HeaderBar extends React.Component {
               c = c.substring(1);
           }
           if (c.indexOf(user) === 0) {
-              return c.substring(user.length + 1, c.length);
+              let res =  c.substring(user.length + 1, c.length);
+              this.setState({
+                  user : res,
+              })
+          }
+          if (c.indexOf('admin') === 0) {
+              this.setState( {
+                  admin : true
+              })
           }
       }
       return null;

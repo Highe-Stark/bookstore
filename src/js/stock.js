@@ -259,8 +259,8 @@ class Add extends React.Component {
             <Grid>
                 <Grid.Column width={3}>
                     <Image src={img} bordered/>
-                    <Form id='profile-form' method='POST' enctype='multipart/form-data' onSubmit={this.submitProfile}>
-                        <Input type='file' id='profileUpload' name='profileUpload' />
+                    <Form id='profile-form' method='POST' onSubmit={this.submitProfile}>
+                        <Input type='file' id='profileUpload' name='profileUpload' enctype='multipart/form-data' />
                         <Button type='submit' value='Upload' content='Update profile'/>
                     </Form>
                 </Grid.Column>
