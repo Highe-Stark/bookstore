@@ -96,9 +96,6 @@ class HeaderBar extends React.Component {
       const url = 'http://localhost:8080/logout?userName=' + this.getUser();
       fetch(url, {
           method : 'GET',
-          /* headers : {
-              'Content-Type' : 'application/x-www-form-application'
-          },*/
           credentials : 'include'
       }).then(response => {
           if (response.status !== 200) {
@@ -112,7 +109,7 @@ class HeaderBar extends React.Component {
   _toggleSearch=() => {
       const searchContent = document.getElementById("search").value;
       console.log(this.props);
-      this.path.search='?q=' + searchContent + '&catagory=' + this.catagory;
+      this.path.search='?q=%' + searchContent + '%&category=' + this.catagory;
       this.props.history.push(this.path);
   };
 

@@ -12,7 +12,10 @@ class BookCard extends React.Component {
     }
     toggleLike = () => {
         const isbn = this.props.book.isbn;
-        fetch ('http://localhost:8080/u/like?isbn=' + isbn, {method : 'GET'})
+        fetch ('http://localhost:8080/u/like?isbn=' + isbn, {
+            method : 'GET', 
+            credentials: "include"
+        })
             .then((response) => { console.log(
                 'like ' + isbn
             );
@@ -26,7 +29,10 @@ class BookCard extends React.Component {
     toggleCart =(e, value) => {
         const isbn = this.props.book.isbn;
         const url = 'http://localhost:8080/b/add_cart?isbn=' + isbn;
-        fetch (url, {method: 'GET'})
+        fetch (url, {
+            method: 'GET',
+            credentials: "include"
+        })
             .then((response) => {
                 if (response.status != 200) {
                     alert('Add to cart failed.');

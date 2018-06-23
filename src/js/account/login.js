@@ -27,11 +27,12 @@ class Login extends Component {
         let body = "userName=" + username + "&pwd=" + password;
         console.log(body);                        // <<<<<<<<<<<<<<<<<< For DEBUG
         // let url = "http://localhost:8080/login?userId=" + userid.value + "&pwd=" + pwd.value;
-        let url = 'http://localhost:8080/login?admin=0&' + body;
+        let url = 'http://localhost:8080/u/login?admin=0&' + body;
         const that = this;
 
         fetch (url, {
-            method: 'GET'
+            method: 'GET',
+            credentials : "include"
         }).then(
             (response) => {
                 if (response.status !== 200) {
@@ -57,9 +58,10 @@ class Login extends Component {
 
     admin_login = (username, password) => {
         console.log("**** Administrator login *****\nAdmin name: " + username + "\nPassword: " + password);
-        const url = 'http://localhost:8080/login?admin=1&userName=' + username + '&pwd=' + password;
+        const url = 'http://localhost:8080/u/login?admin=1&userName=' + username + '&pwd=' + password;
         fetch (url, {
-            method: 'GET'
+            method: 'GET',
+            credentials: "include"
         }).then((response) => {
             let status = response.status;
             if (status != 200) {

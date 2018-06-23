@@ -32,7 +32,7 @@ class Bk extends React.Component {
 
     _toggleDel(e, value) {
         let isbn = value.isbn;
-        const url = 'http://localhost:8080/delete?isbn=' + isbn;
+        const url = 'http://localhost:8080/b/delete?isbn=' + isbn;
         fetch (url, {
             method : 'GET'
         }).then(response => {
@@ -227,17 +227,40 @@ class Add extends React.Component {
         console.log("Submit Book");
         console.log(value);
         console.log(this.state);
+        const book = this.state;
+        const url = 'http://localhost:8080/b/add_book';
+        const body = 'name='+ book.name + '&author=' + book.author + '&date=' + book.date + '&isbn=' + book.isbn
+            + '&language=' + book.lang + '&price=' + book.price + '&stock=' + book.stock;
+        fetch (url, {
+            method : 'POST',
+            body: body,
+            headers : {
+                'Content-Type' : 'application/x-www-form-urlencoded',
+            }
+        }).then((response) => {
+            if (response.status != 200) {
+                alert('Add book failed');
+                return;
+            }
+            alert('Add book complete');
+        }).catch((err) => {
+            console.log(err);
+            alert("Error occurred.");
+        })
+        let newImg = document.getElementById('profileUpload').files[0];
+        if (newImg !== null) this.submitProfile();
     };
 
     submitProfile = () =>{
         let newProfile = document.getElementById('profileUpload').files[0];
         console.log(newProfile);
         let formData = new FormData();
-        formData.append('new_profile', newProfile);
-        let url = 'http://localhost:8080/api/upload';
+        formData.append('isbn', this.state.isbn);
+        formData.append('img', newProfile);
+        let url = 'http://localhost:8080/b/set_img';
         fetch (url, {
-            method : 'POST',
-            body : formData
+            method : 'PUT',
+            body : formData,
         }).then(response => {
             if (response.status !== 200) {
                 alert('Upload profile failed.');
@@ -260,7 +283,7 @@ class Add extends React.Component {
                 <Grid.Column width={3}>
                     <Image src={img} bordered/>
                     <Form id='profile-form' method='POST' onSubmit={this.submitProfile}>
-                        <Input type='file' id='profileUpload' name='profileUpload' enctype='multipart/form-data' />
+                        <Input type='file' id='profileUpload' name='profileUpload' encType='multipart/form-data' />
                         <Button type='submit' value='Upload' content='Update profile'/>
                     </Form>
                 </Grid.Column>

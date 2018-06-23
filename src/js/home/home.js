@@ -73,28 +73,27 @@ class Home extends React.Component {
     }
 
    componentWillMount() {
-       var url = "http://localhost:8080/b/";
+       var url = "http://localhost:8080/b/all";
        fetch (url, {
            method : 'GET',
-           // origin : "http://localhost:8080"
        }).then(
            function (response) {
                console.log(response);
-               // if (response == null) return null;
                return response.json();
            }
        ).catch(err => {
            console.log(err);
            return null;
        }).then ((data) => {
-           if (data === null) return;
-           for (let i = 0; i < data.length; i++) {
+           if (data === null || data.content === null) return;
+           const result = data.content;
+           for (let i = 0; i < result.length; i++) {
                var newBook = {
-                   name: data[i].name,
-                   Author: data[i].author,
-                   Date: data[i].date,
-                   img: 'http://localhost:8080/' + data[i].img,
-                   isbn: data[i].isbn
+                   name: result[i].name,
+                   Author: result[i].author,
+                   Date: result[i].date,
+                   img: 'http://localhost:8080/' + result[i].img,
+                   isbn: result[i].isbn
                };
                books.push(newBook);
            }

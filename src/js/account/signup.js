@@ -86,7 +86,7 @@ class Signup extends Component {
           alert("invalid");
           return;
       }
-      const url = "http://localhost:8080/signup";
+      const url = "http://localhost:8080/u/signup";
       let body = 'userName=' + name + '&pwd=' + pwd + '&phone=' + phone + '&email=' + email;
       fetch (url, {
           body : body,

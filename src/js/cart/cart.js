@@ -37,6 +37,30 @@ class Cart extends Component {
         }
     }
 
+    componentWillMount = () => {
+        const url = 'http://localhost:8080/b/cart';
+        // let headers = new Headers();
+        fetch (url, {
+            method: 'GET',
+            credentials: "include"
+        })
+            .then((response) => {
+                if (response.status !== 200) {
+                    console.log("Get cart failed. " + response.statusText);
+                    this.setState({
+                        res: []
+                    });
+                    return
+                }
+                return response.json()
+            })
+            .then((data) => {
+                this.setState({
+                    res: data
+                });
+                console.log(data);
+            })
+    };
     increase=(e, value) => {
         // result[e].amount += 1;
         // this.setState({

@@ -93,26 +93,39 @@ class Search extends React.Component {
             });
             return;
         }
-        const url = 'http://localhost:8080/' + this.props.history.location.search;
+        const url = 'http://localhost:8080/b/search' + this.props.history.location.search;
         fetch ( url, {
-            method : 'GET'
-        }).then (response => {return response.json()})
+            method : 'GET',
+            credentials: "include"
+        }).then (response => {
+            if (response.status !== 200) {
+                throw Error("Search error");
+            }
+            return response.json();
+        })
             .then((data) => {
+                console.log(data);
+                let res = [];
                 for (let i = 0; i !== data.length; i++) {
+                    console.log(data[i]);
                     let book = {
+                        isbn: data[i].isbn,
                         name : data[i].name,
                         Author : data[i].author,
-                        img : 'http://localhost:8080/' + data[i].img,
+                        img : 'http://localhost:8080/b/get_img' + data[i].img,
                         Date : data[i].date,
                         Language : data[i].lang,
                         price : data[i].price,
                         amount : data[i].stock
                     };
-                    result.push(book);
+                    res.push(book);
                 }
                 this.setState({
-                    res : result
+                    res : res
                 })
+            })
+            .catch((err) => {
+                alert(err);
             })
     }
 
